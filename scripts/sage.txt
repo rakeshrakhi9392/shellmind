@@ -1,0 +1,52 @@
+#!/bin/bash
+
+
+path=$SAGE_PATH
+
+codepath=$path"/code.py"
+commandpath=$path"/command.py"
+errorpath=$path"/error.py"
+chatpath=$path"/chat.py"
+
+
+echo $code
+
+
+case "$1" in
+    --code)
+        flag=0
+        if [ "$2" == '-f' ]; then
+            filename=$3
+            prompt=$4
+        elif [ "$3" == '-f' ]; then
+            filename= $4
+            prompt= $2
+        else
+            flag=1
+            prompt=$2
+            prompt=\"${prompt}\"
+            commando="${prompt}"
+        fi
+
+        file="-f"
+        prompt=\"${prompt}\"
+        command="${file} ${filename} ${prompt}"
+
+        if [ $flag == 0 ]; then
+            python3 "$codepath" $command
+        else 
+            python3 "$codepath" "$commando"
+        fi
+        ;;
+    --shell)
+        python3 $commandpath
+        ;;
+    --debug)
+        python3 $errorpath
+        ;;
+    *)
+        arg=$1
+        python3 "$chatpath" "$arg"
+        ;;
+
+esac
